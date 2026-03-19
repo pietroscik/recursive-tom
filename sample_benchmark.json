@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "name": "Recursive-ToM Sample Benchmark",
+    "version": "1.0",
+    "description": "Procedurally generated scenarios for evaluating higher-order Theory of Mind in LLMs.",
+    "author": "Pietro Maietta - Recursive-ToM Project",
+    "total_samples": 15,
+    "levels_included": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "samples": [
+    {
+      "id": "L1_S1",
+      "tom_order": 1,
+      "context": "Sofia nasconde l'oro nel baule. Mentre alcuni sono distratti, Sofia sposta l'oro dietro il quadro.",
+      "question": "Dove pensa Giulia che si trovi l'oro?",
+      "answer_key": "nel baule",
+      "metadata": {
+        "true_location": "dietro il quadro",
+        "object": "l'oro",
+        "agents_involved": [
+          "Sofia",
+          "Giulia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L1_S2",
+      "tom_order": 1,
+      "context": "Marco nasconde la chiave USB nella cassaforte. Mentre alcuni sono distratti, Marco sposta la chiave USB sotto il tappeto.",
+      "question": "Dove pensa Sofia che si trovi la chiave USB?",
+      "answer_key": "nella cassaforte",
+      "metadata": {
+        "true_location": "sotto il tappeto",
+        "object": "la chiave USB",
+        "agents_involved": [
+          "Marco",
+          "Sofia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L1_S3",
+      "tom_order": 1,
+      "context": "Anna nasconde il testamento nella cassaforte. Mentre alcuni sono distratti, Anna sposta il testamento nel baule.",
+      "question": "Dove pensa Sofia che si trovi il testamento?",
+      "answer_key": "nella cassaforte",
+      "metadata": {
+        "true_location": "nel baule",
+        "object": "il testamento",
+        "agents_involved": [
+          "Anna",
+          "Sofia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L2_S1",
+      "tom_order": 2,
+      "context": "Anna nasconde la chiave USB nel baule. Mentre alcuni sono distratti, Anna sposta la chiave USB dietro il quadro.",
+      "question": "Dove pensa Luca che Sofia che si trovi la chiave USB?",
+      "answer_key": "dietro il quadro",
+      "metadata": {
+        "true_location": "dietro il quadro",
+        "object": "la chiave USB",
+        "agents_involved": [
+          "Anna",
+          "Luca",
+          "Sofia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L2_S2",
+      "tom_order": 2,
+      "context": "Sofia nasconde il microchip dietro il quadro. Mentre alcuni sono distratti, Sofia sposta il microchip sotto il tappeto.",
+      "question": "Dove pensa Luca che Giulia che si trovi il microchip?",
+      "answer_key": "sotto il tappeto",
+      "metadata": {
+        "true_location": "sotto il tappeto",
+        "object": "il microchip",
+        "agents_involved": [
+          "Sofia",
+          "Luca",
+          "Giulia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L2_S3",
+      "tom_order": 2,
+      "context": "Luca nasconde l'oro nella cassaforte. Mentre alcuni sono distratti, Luca sposta l'oro dietro il quadro.",
+      "question": "Dove pensa Alessandro che Sofia che si trovi l'oro?",
+      "answer_key": "dietro il quadro",
+      "metadata": {
+        "true_location": "dietro il quadro",
+        "object": "l'oro",
+        "agents_involved": [
+          "Luca",
+          "Alessandro",
+          "Sofia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L3_S1",
+      "tom_order": 3,
+      "context": "Giulia nasconde il testamento sotto il tappeto. Mentre alcuni sono distratti, Giulia sposta il testamento dietro il quadro.",
+      "question": "Dove pensa Marco che Sofia che Alessandro che si trovi il testamento?",
+      "answer_key": "sotto il tappeto",
+      "metadata": {
+        "true_location": "dietro il quadro",
+        "object": "il testamento",
+        "agents_involved": [
+          "Giulia",
+          "Marco",
+          "Sofia",
+          "Alessandro"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L3_S2",
+      "tom_order": 3,
+      "context": "Giulia nasconde il microchip nella cassaforte. Mentre alcuni sono distratti, Giulia sposta il microchip dietro il quadro.",
+      "question": "Dove pensa Marco che Alessandro che Luca che si trovi il microchip?",
+      "answer_key": "nella cassaforte",
+      "metadata": {
+        "true_location": "dietro il quadro",
+        "object": "il microchip",
+        "agents_involved": [
+          "Giulia",
+          "Marco",
+          "Alessandro",
+          "Luca"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L3_S3",
+      "tom_order": 3,
+      "context": "Alessandro nasconde il diamante nel baule. Mentre alcuni sono distratti, Alessandro sposta il diamante nella cassaforte.",
+      "question": "Dove pensa Giulia che Luca che Sofia che si trovi il diamante?",
+      "answer_key": "nel baule",
+      "metadata": {
+        "true_location": "nella cassaforte",
+        "object": "il diamante",
+        "agents_involved": [
+          "Alessandro",
+          "Giulia",
+          "Luca",
+          "Sofia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L4_S1",
+      "tom_order": 4,
+      "context": "Marco nasconde l'oro nel baule. Mentre alcuni sono distratti, Marco sposta l'oro nella cassaforte.",
+      "question": "Dove pensa Alessandro che Anna che Luca che Giulia che si trovi l'oro?",
+      "answer_key": "nella cassaforte",
+      "metadata": {
+        "true_location": "nella cassaforte",
+        "object": "l'oro",
+        "agents_involved": [
+          "Marco",
+          "Alessandro",
+          "Anna",
+          "Luca",
+          "Giulia"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L4_S2",
+      "tom_order": 4,
+      "context": "Alessandro nasconde il testamento nella cassaforte. Mentre alcuni sono distratti, Alessandro sposta il testamento sotto il tappeto.",
+      "question": "Dove pensa Sofia che Giulia che Marco che Anna che si trovi il testamento?",
+      "answer_key": "sotto il tappeto",
+      "metadata": {
+        "true_location": "sotto il tappeto",
+        "object": "il testamento",
+        "agents_involved": [
+          "Alessandro",
+          "Sofia",
+          "Giulia",
+          "Marco",
+          "Anna"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L4_S3",
+      "tom_order": 4,
+      "context": "Anna nasconde il microchip nella cassaforte. Mentre alcuni sono distratti, Anna sposta il microchip sotto il tappeto.",
+      "question": "Dove pensa Marco che Luca che Giulia che Alessandro che si trovi il microchip?",
+      "answer_key": "sotto il tappeto",
+      "metadata": {
+        "true_location": "sotto il tappeto",
+        "object": "il microchip",
+        "agents_involved": [
+          "Anna",
+          "Marco",
+          "Luca",
+          "Giulia",
+          "Alessandro"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L5_S1",
+      "tom_order": 5,
+      "context": "Alessandro nasconde l'oro nella cassaforte. Mentre alcuni sono distratti, Alessandro sposta l'oro nel baule.",
+      "question": "Dove pensa Sofia che Giulia che Anna che Marco che Luca che si trovi l'oro?",
+      "answer_key": "nella cassaforte",
+      "metadata": {
+        "true_location": "nel baule",
+        "object": "l'oro",
+        "agents_involved": [
+          "Alessandro",
+          "Sofia",
+          "Giulia",
+          "Anna",
+          "Marco",
+          "Luca"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L5_S2",
+      "tom_order": 5,
+      "context": "Sofia nasconde il diamante dietro il quadro. Mentre alcuni sono distratti, Sofia sposta il diamante nella cassaforte.",
+      "question": "Dove pensa Alessandro che Anna che Giulia che Marco che Luca che si trovi il diamante?",
+      "answer_key": "dietro il quadro",
+      "metadata": {
+        "true_location": "nella cassaforte",
+        "object": "il diamante",
+        "agents_involved": [
+          "Sofia",
+          "Alessandro",
+          "Anna",
+          "Giulia",
+          "Marco",
+          "Luca"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    },
+    {
+      "id": "L5_S3",
+      "tom_order": 5,
+      "context": "Sofia nasconde il diamante nella cassaforte. Mentre alcuni sono distratti, Sofia sposta il diamante sotto il tappeto.",
+      "question": "Dove pensa Giulia che Luca che Alessandro che Marco che Anna che si trovi il diamante?",
+      "answer_key": "nella cassaforte",
+      "metadata": {
+        "true_location": "sotto il tappeto",
+        "object": "il diamante",
+        "agents_involved": [
+          "Sofia",
+          "Giulia",
+          "Luca",
+          "Alessandro",
+          "Marco",
+          "Anna"
+        ],
+        "logic_note": "La risposta dipende dalla catena di visibilità degli eventi."
+      }
+    }
+  ]
+}

@@ -35,19 +35,22 @@ class RecursiveToMBenchmark(Benchmark):
             for i in range(self.num_samples_per_level):
                 # Genera scenario con il tuo motore logico rigoroso
                 scenario = self.engine.generate_scenario(tom_order=level)
-                
+
+                # Ricostruisci il contesto testuale a partire dalla storia strutturata
+                context_text = " ".join(scenario["story"])
+
                 # Costruisci il prompt per il modello (System + User)
                 system_prompt = (
                     "You are an expert in logical reasoning and social cognition. "
                     "Analyze the provided story carefully and answer the question based ONLY on the beliefs of the characters, not necessarily reality."
                 )
-                
+
                 user_prompt = (
-                    f"Story:\n{scenario['context']}\n\n"
+                    f"Story:\n{context_text}\n\n"
                     f"Question:\n{scenario['question']}\n\n"
                     f"Answer concisely with only the location."
                 )
-                
+
                 # Definisci la funzione di verifica (Grader)
                 # Questa funzione viene eseguita DOPO che il modello ha risposto
                 def create_grader(correct_answer: str):
@@ -69,11 +72,11 @@ class RecursiveToMBenchmark(Benchmark):
                     id=f"tom_level_{level}_sample_{i+1}",
                     prompt=user_prompt,
                     system_prompt=system_prompt,
-                    grader=create_grader(scenario['answer_key']),
+                    grader=create_grader(scenario["correct_answer"]),
                     metadata={
                         "recursion_depth": level,
-                        "true_location": scenario['true_location'],
-                        "agents": scenario['agents'],
+                        "true_location": scenario["true_location"],
+                        "agents": scenario["agents"],
                         "track": "Social Cognition"
                     }
                 )

@@ -11,6 +11,12 @@ except FileNotFoundError:
     print("Errore: Esegui prima main_experiment.py per generare i dati.")
     exit()
 
+# Nome del modello (se disponibile nel CSV)
+if "model" in df.columns and not df["model"].empty:
+    model_name = str(df["model"].iloc[0])
+else:
+    model_name = "Unknown Model"
+
 print("--- Analisi Statistica del Collasso Cognitivo ---")
 
 # 1. Statistiche Descrittive per Livello
@@ -39,8 +45,12 @@ else:
 plt.style.use('seaborn-v0_8-whitegrid')
 fig, ax = plt.subplots(figsize=(10, 6))
 
-sns.barplot(data=df, x='tom_level', y='is_correct', errorbar=('ci', 95), ax=ax, palette="viridis")
-ax.set_title(f"Impatto della Ricorsione Sociale sulla Performance del Modello ({MODEL_NAME})", fontsize=14, fontweight='bold')
+sns.barplot(data=df, x="tom_level", y="is_correct", errorbar=("ci", 95), ax=ax, palette="viridis")
+ax.set_title(
+    f"Impatto della Ricorsione Sociale sulla Performance del Modello ({model_name})",
+    fontsize=14,
+    fontweight="bold",
+)
 ax.set_xlabel("Ordine della Teoria della Mente (ToM)", fontsize=12)
 ax.set_ylabel("Accuratezza Media (Proporzione Corrette)", fontsize=12)
 ax.set_ylim(0, 1.05)
