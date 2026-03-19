@@ -1,94 +1,75 @@
-# src/benchmark.py
-import os
-import json
-import random
-from typing import List, Dict, Any
-from kaggle_benchmarks import Benchmark, Task, TaskResult
+"""
+Benchmark Recursive-ToM per kaggle_benchmarks (API moderna).
 
-# Importa il tuo motore logico (assicurati che sia nella stessa cartella o installabile)
-from recursive_tom_engine import RecursiveToMEngine 
+Definisce un singolo task parametrico tramite il decoratore @kbench.task.
+Su Kaggle, potrai selezionarlo con `%choose recursive_tom_task` nel notebook.
+"""
 
-class RecursiveToMBenchmark(Benchmark):
+from typing import Any, Dict
+
+import kaggle_benchmarks as kbench
+
+from recursive_tom_engine import RecursiveToMEngine
+
+
+@kbench.task(name="recursive_tom_task")
+def recursive_tom_task(
+    llm,
+    tom_level: int = 1,
+    seed: int = 0,
+) -> None:
     """
-    Benchmark ufficiale per la valutazione della Teoria della Mente Ricorsiva.
-    Track: Social Cognition
+    Task di benchmark per un singolo scenario di Teoria della Mente ricorsiva.
+
+    Parametri:
+        llm: modello fornito da kaggle_benchmarks (kbench.llm).
+        tom_level: livello di ricorsione (1 = false belief, >1 = higher-order).
+        seed: per riproducibilità opzionale degli scenari.
     """
-    
-    def __init__(self):
-        super().__init__(
-            name="Recursive-ToM",
-            description="Procedural benchmark for higher-order social inference. Measures cognitive collapse under recursive belief tracking.",
-            version="1.0.0"
-        )
-        self.engine = RecursiveToMEngine()
-        self.num_samples_per_level = 5
-        self.max_recursion_depth = 6
+    import random
 
-    def generate_tasks(self) -> List[Task]:
-        """Genera proceduralmente tutte le task per il benchmark."""
-        tasks = []
-        task_id_counter = 1
-        
-        print(f"🚀 Generazione di {self.num_samples_per_level * self.max_recursion_depth} task procedurali...")
-        
-        for level in range(1, self.max_recursion_depth + 1):
-            for i in range(self.num_samples_per_level):
-                # Genera scenario con il tuo motore logico rigoroso
-                scenario = self.engine.generate_scenario(tom_order=level)
+    random.seed(seed)
+    engine = RecursiveToMEngine()
 
-                # Ricostruisci il contesto testuale a partire dalla storia strutturata
-                context_text = " ".join(scenario["story"])
+    scenario: Dict[str, Any] = engine.generate_scenario(tom_order=tom_level)
+    context_text = " ".join(scenario["story"])
 
-                # Costruisci il prompt per il modello (System + User)
-                system_prompt = (
-                    "You are an expert in logical reasoning and social cognition. "
-                    "Analyze the provided story carefully and answer the question based ONLY on the beliefs of the characters, not necessarily reality."
-                )
+    system_prompt = (
+        "You are an expert in logical reasoning and social cognition. "
+        "Analyze the provided story carefully and answer the question based ONLY "
+        "on the beliefs of the characters, not necessarily reality."
+    )
 
-                user_prompt = (
-                    f"Story:\n{context_text}\n\n"
-                    f"Question:\n{scenario['question']}\n\n"
-                    f"Answer concisely with only the location."
-                )
+    user_prompt = (
+        f"Story:\n{context_text}\n\n"
+        f"Question:\n{scenario['question']}\n\n"
+        "Answer concisely with only the location."
+    )
 
-                # Definisci la funzione di verifica (Grader)
-                # Questa funzione viene eseguita DOPO che il modello ha risposto
-                def create_grader(correct_answer: str):
-                    def grader(model_output: str) -> TaskResult:
-                        # Normalizzazione semplice per il confronto (puoi raffinarla)
-                        normalized_output = model_output.strip().lower()
-                        normalized_truth = correct_answer.strip().lower()
-                        
-                        # Controllo esatto o parziale (a seconda di quanto vuoi essere rigido)
-                        is_correct = normalized_truth in normalized_output
-                        
-                        return TaskResult(
-                            score=1.0 if is_correct else 0.0,
-                            feedback=f"Expected: '{correct_answer}'. Got: '{model_output}'."
-                        )
-                    return grader
+    full_prompt = f"{system_prompt}\n\n{user_prompt}"
 
-                task = Task(
-                    id=f"tom_level_{level}_sample_{i+1}",
-                    prompt=user_prompt,
-                    system_prompt=system_prompt,
-                    grader=create_grader(scenario["correct_answer"]),
-                    metadata={
-                        "recursion_depth": level,
-                        "true_location": scenario["true_location"],
-                        "agents": scenario["agents"],
-                        "track": "Social Cognition"
-                    }
-                )
-                tasks.append(task)
-                task_id_counter += 1
-                
-        return tasks
+    # Chiamata al modello via Kaggle Proxy
+    response = llm.prompt(full_prompt)
 
-# Punto di ingresso per Kaggle
+    # Validazione: la risposta deve contenere la location corretta (case-insensitive)
+    correct_answer = scenario["correct_answer"]
+    pattern = rf"(?i){correct_answer}"
+
+    kbench.assertions.assert_contains_regex(
+        pattern,
+        response,
+        expectation=(
+            f"LLM should mention the correct believed location '{correct_answer}' "
+            f"for ToM recursion level {tom_level}."
+        ),
+    )
+
+
 if __name__ == "__main__":
-    benchmark = RecursiveToMBenchmark()
-    # Questo comando registra il benchmark sulla piattaforma Kaggle
-    # Nota: Richiede autenticazione Kaggle CLI configurata
-    benchmark.push() 
-    print("✅ Benchmark caricato con successo su Kaggle!")
+    # Esecuzione di esempio locale/Kaggle: loop su alcuni livelli di ToM.
+    # In un notebook Kaggle per il leaderboard userai invece:
+    #   %choose recursive_tom_task
+    # e poi chiamerai recursive_tom_task.run(...)
+    for level in [1, 2, 3, 4]:
+        print(f"Running demo for ToM level {level}...")
+        recursive_tom_task.run(llm=kbench.llm, tom_level=level, seed=0)
