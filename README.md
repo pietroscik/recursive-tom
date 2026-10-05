@@ -1,5 +1,7 @@
 # Recursive-ToM: Procedural Benchmark for Higher-Order Social Inference
 
+> 💡 **Stato**: Proof of Concept — esperimento di Theory of Mind ricorsiva per AI safety; benchmark e analisi statistica inclusi.
+
 > *"Measuring cognitive collapse in LLMs under recursive social reasoning"*
 
 **Status**: Under Development  
@@ -34,7 +36,8 @@ Current ToM benchmarks are static and shallow. This project introduces a dynamic
 - `statistical_analysis.py`: analisi statistica/plot del collasso cognitivo a partire da `benchmark_raw_results.csv`.
 - `src/benchmark.py`: wrapper Kaggle (`kaggle_benchmarks`) per esportare il benchmark ufficiale.
 
-## Installazione Rapida
+## Installazione
+ Rapida
 Richiede Python 3.9+.
 
 Installazione dipendenze principali (locale o su Kaggle Notebook):
